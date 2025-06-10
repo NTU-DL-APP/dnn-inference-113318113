@@ -7,9 +7,15 @@ def relu(x):
     return np.maximum(0, x)
 
 def softmax(x):
-    x = x - np.max(x, axis=-1, keepdims=True)
-    e_x = np.exp(x)
-    return e_x / np.sum(e_x, axis=-1, keepdims=True)
+    x = np.array(x)
+    if x.ndim == 1:
+        x = x - np.max(x)
+        e_x = np.exp(x)
+        return e_x / np.sum(e_x)
+    else:
+        x = x - np.max(x, axis=1, keepdims=True)
+        e_x = np.exp(x)
+        return e_x / np.sum(e_x, axis=1, keepdims=True)
 
 # === Flatten ===
 def flatten(x):
